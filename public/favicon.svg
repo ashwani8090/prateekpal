@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E2243"/>
+      <stop offset="100%" stop-color="#050E1C"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCEFD2"/>
+      <stop offset="35%" stop-color="#E5C38C"/>
+      <stop offset="70%" stop-color="#C5A880"/>
+      <stop offset="100%" stop-color="#9C7741"/>
+    </linearGradient>
+    <linearGradient id="goldBeam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C5A880"/>
+      <stop offset="50%" stop-color="#FFF5E0"/>
+      <stop offset="100%" stop-color="#C5A880"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Circular Badge Background -->
+  <circle cx="64" cy="64" r="62" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="3.5"/>
+  <circle cx="64" cy="64" r="56" fill="none" stroke="url(#goldGrad)" stroke-width="1" stroke-opacity="0.45"/>
+  
+  <!-- Scales of Justice Symbol -->
+  <!-- Top Finial Ball -->
+  <circle cx="64" cy="22" r="4.5" fill="url(#goldGrad)"/>
+  
+  <!-- Central Pillar Shaft -->
+  <path d="M61.5 24 H66.5 V96 H61.5 Z" fill="url(#goldGrad)"/>
+  
+  <!-- Central Pivot Ring -->
+  <circle cx="64" cy="38" r="7" fill="#071329" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  <circle cx="64" cy="38" r="2.8" fill="url(#goldGrad)"/>
+  
+  <!-- Horizontal Balance Beam -->
+  <path d="M22 36.5 C22 34.5 106 34.5 106 36.5 C106 38.5 22 38.5 22 36.5 Z" fill="url(#goldBeam)"/>
+  <circle cx="23" cy="36.5" r="3.5" fill="url(#goldGrad)"/>
+  <circle cx="105" cy="36.5" r="3.5" fill="url(#goldGrad)"/>
+  
+  <!-- Left Suspension Strings -->
+  <line x1="23" y1="37" x2="12" y2="66" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="23" y1="37" x2="34" y2="66" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Left Pan Dish -->
+  <path d="M10 66 C13 78 33 78 36 66 Z" fill="url(#goldGrad)"/>
+  <ellipse cx="23" cy="66" rx="13" ry="2.8" fill="#FFF5E0"/>
+
+  <!-- Right Suspension Strings -->
+  <line x1="105" y1="37" x2="94" y2="66" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="105" y1="37" x2="116" y2="66" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Right Pan Dish -->
+  <path d="M92 66 C95 78 115 78 118 66 Z" fill="url(#goldGrad)"/>
+  <ellipse cx="105" cy="66" rx="13" ry="2.8" fill="#FFF5E0"/>
+
+  <!-- Pedestal Base Steps -->
+  <rect x="48" y="93" width="32" height="4" rx="1" fill="url(#goldGrad)"/>
+  <rect x="42" y="97" width="44" height="4" rx="1" fill="url(#goldGrad)"/>
+  <rect x="36" y="101" width="56" height="5" rx="1.5" fill="url(#goldGrad)"/>
+</svg>
