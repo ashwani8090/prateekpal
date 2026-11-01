@@ -98,12 +98,38 @@ export default async function handler(req, res) {
       </div>
     `;
 
-    const result = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'ashwani9080singh@gmail.com',
+    const recipientEmail = process.env.RECIPIENT_EMAIL || 'jsprateeks@gmail.com';
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+
+    let result = await resend.emails.send({
+      from: fromEmail,
+      to: recipientEmail,
       subject: `New Legal Inquiry: ${name || 'Client'} - ${division || 'General Consultation'}`,
       html: htmlContent,
     });
+
+    // Handle Resend free testing sandbox restriction fallback
+    if (
+      result.error &&
+      (result.error.statusCode === 403 || result.error.name === 'validation_error') &&
+      result.error.message?.includes('testing emails')
+    ) {
+      console.warn(
+        `[Resend Notice] Direct dispatch to ${recipientEmail} restricted in free sandbox. Forwarding to verified account address.`
+      );
+      result = await resend.emails.send({
+        from: fromEmail,
+        to: 'ashwani9080singh@gmail.com',
+        subject: `[Intended For: ${recipientEmail}] New Legal Inquiry: ${name || 'Client'} - ${division || 'General Consultation'}`,
+        html: `
+          <div style="background:#fffbeb;border:1px solid #fde68a;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:12px;color:#92400e;">
+            <strong>⚠️ Resend Sandbox Delivery:</strong> Intended recipient is <strong>${recipientEmail}</strong>.<br/>
+            While Resend is in free testing mode with <code>onboarding@resend.dev</code>, Resend only delivers to the account owner email. Once a custom domain is verified at <a href="https://resend.com/domains" style="color:#b45309;font-weight:bold;">resend.com/domains</a>, emails will be delivered directly to <strong>${recipientEmail}</strong>.
+          </div>
+          ${htmlContent}
+        `,
+      });
+    }
 
     return res.status(200).json({ success: true, result });
   } catch (error) {

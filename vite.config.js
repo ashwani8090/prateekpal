@@ -2,7 +2,10 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { Resend } from 'resend';
 
-function resendDevPlugin(apiKey) {
+function resendDevPlugin({ apiKey, recipientEmail, fromEmail }) {
+  const targetTo = recipientEmail || 'jsprateeks@gmail.com';
+  const targetFrom = fromEmail || 'onboarding@resend.dev';
+
   return {
     name: 'resend-dev-server-plugin',
     configureServer(server) {
@@ -102,12 +105,35 @@ function resendDevPlugin(apiKey) {
                 </div>
               `;
 
-              const result = await resend.emails.send({
-                from: 'onboarding@resend.dev',
-                to: 'ashwani9080singh@gmail.com',
+              let result = await resend.emails.send({
+                from: targetFrom,
+                to: targetTo,
                 subject: `New Legal Inquiry: ${name || 'Client'} - ${division || 'General Consultation'}`,
                 html: htmlContent,
               });
+
+              // If Resend free sandbox restricts recipient to account owner, fallback gracefully
+              if (
+                result.error &&
+                (result.error.statusCode === 403 || result.error.name === 'validation_error') &&
+                result.error.message?.includes('testing emails')
+              ) {
+                console.warn(
+                  `[Resend Notice] Direct dispatch to ${targetTo} restricted in free sandbox. Forwarding to verified account address.`
+                );
+                result = await resend.emails.send({
+                  from: targetFrom,
+                  to: 'ashwani9080singh@gmail.com',
+                  subject: `[Intended For: ${targetTo}] New Legal Inquiry: ${name || 'Client'} - ${division || 'General Consultation'}`,
+                  html: `
+                    <div style="background:#fffbeb;border:1px solid #fde68a;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:12px;color:#92400e;">
+                      <strong>⚠️ Resend Sandbox Delivery:</strong> Intended recipient is <strong>${targetTo}</strong>.<br/>
+                      While Resend is in free testing mode with <code>onboarding@resend.dev</code>, Resend only delivers to the account owner email. Once a custom domain is verified at <a href="https://resend.com/domains" style="color:#b45309;font-weight:bold;">resend.com/domains</a>, emails will be delivered directly to <strong>${targetTo}</strong>.
+                    </div>
+                    ${htmlContent}
+                  `,
+                });
+              }
 
               res.setHeader('Content-Type', 'application/json');
               res.statusCode = 200;
@@ -136,8 +162,13 @@ function resendDevPlugin(apiKey) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const apiKey = env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+  const recipientEmail = env.RECIPIENT_EMAIL || process.env.RECIPIENT_EMAIL || 'jsprateeks@gmail.com';
+  const fromEmail = env.RESEND_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
 
   return {
-    plugins: [react(), resendDevPlugin(apiKey)],
+    plugins: [
+      react(),
+      resendDevPlugin({ apiKey, recipientEmail, fromEmail }),
+    ],
   };
 });
