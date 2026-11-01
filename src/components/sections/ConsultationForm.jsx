@@ -11,8 +11,11 @@ import {
   Building,
   Globe,
   Clock,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
 import { openWhatsApp } from "../../utils/whatsapp";
+import { sendInquiryEmail } from "../../utils/emailService";
 
 export const ConsultationForm = () => {
   const [formData, setFormData] = useState({
@@ -26,10 +29,22 @@ export const ConsultationForm = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    const result = await sendInquiryEmail(formData, "Advocate Consultation Form");
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setSubmitted(true);
+    } else {
+      setErrorMessage(result.error || "Failed to dispatch email. Please try WhatsApp directly.");
+    }
   };
 
   const handleSendViaWhatsApp = () => {
@@ -179,10 +194,10 @@ export const ConsultationForm = () => {
                   <CheckCircle className="w-7 h-7" />
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-slate-900">
-                  Inquiry Transmitted
+                  Inquiry Dispatched Successfully
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-                  Thank you. Your inquiry has been recorded. For instant response, click below to transmit directly to Advocate Prateek Pal on WhatsApp.
+                  Thank you. Your inquiry has been emailed directly to our chambers desk. We will review your matter promptly. For immediate urgent matters, you may also connect directly via WhatsApp.
                 </p>
                 <div className="pt-3 flex flex-col sm:flex-row gap-3 justify-center">
                   <button
@@ -346,13 +361,30 @@ export const ConsultationForm = () => {
                   />
                 </div>
 
+                {errorMessage && (
+                  <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 <div className="pt-2 flex flex-col sm:flex-row gap-3">
                   <button
                     type="submit"
-                    className="flex-1 py-3 px-6 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-xs"
+                    disabled={isSubmitting}
+                    className="flex-1 py-3 px-6 rounded-xl bg-amber-400 hover:bg-amber-500 disabled:opacity-60 disabled:cursor-not-allowed text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-xs"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Submit Inquiry</span>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Transmitting Email...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Submit Inquiry</span>
+                      </>
+                    )}
                   </button>
 
                   <button

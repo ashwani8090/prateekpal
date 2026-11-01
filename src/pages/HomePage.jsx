@@ -40,8 +40,11 @@ import {
   Plus,
   Minus,
   Check,
+  Loader2,
+  CheckCircle,
 } from "lucide-react";
 import { openWhatsApp } from "../utils/whatsapp";
+import { sendInquiryEmail } from "../utils/emailService";
 
 export const HomePage = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
@@ -53,14 +56,28 @@ export const HomePage = () => {
     phone: "",
     message: "",
   });
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    openWhatsApp(
-      `Hello Prateek Associates, I would like to enquire. Name: ${formData.name}, Phone: ${formData.phone}, Email: ${formData.email}. Message: ${formData.message}`
-    );
+    setIsSubmitting(true);
+    setSubmitError("");
+    setSubmitSuccess(false);
+
+    const result = await sendInquiryEmail(formData, "Homepage Quick Contact");
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setSubmitSuccess(true);
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } else {
+      setSubmitError(result.error || "Failed to dispatch email. Opening WhatsApp as alternate...");
+      openWhatsApp(
+        `Hello Prateek Associates, I would like to enquire. Name: ${formData.name}, Phone: ${formData.phone}, Email: ${formData.email}. Message: ${formData.message}`
+      );
+    }
   };
 
   // 1. Core Service Divisions Data matching mockup
@@ -679,15 +696,32 @@ export const HomePage = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-3 px-6 rounded-lg bg-[#0B1325] hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-xs"
+                    disabled={isSubmitting}
+                    className="w-full py-3 px-6 rounded-lg bg-[#0B1325] hover:bg-slate-800 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-xs"
                   >
-                    <span>Send Message</span>
-                    <ArrowRight className="w-4 h-4" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                        <span>Sending Inquiry...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </>
+                    )}
                   </button>
 
-                  {formSubmitted && (
-                    <p className="text-center text-xs text-emerald-600 font-semibold pt-1">
-                      Thank you! Opening WhatsApp to connect with Advocate Prateek Pal...
+                  {submitSuccess && (
+                    <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span>Thank you! Your message has been sent to our chambers email desk. We will respond promptly.</span>
+                    </div>
+                  )}
+
+                  {submitError && (
+                    <p className="text-center text-xs text-amber-700 font-medium pt-1">
+                      {submitError}
                     </p>
                   )}
                 </form>
