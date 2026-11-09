@@ -23,6 +23,7 @@ import {
   ShieldAlert,
   MapPin,
   ExternalLink,
+  Navigation,
   ChevronDown,
   ChevronRight,
   User,
@@ -645,7 +646,7 @@ export const HomePage = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-amber-400 hover:shadow-xs transition-all group"
-                  title="Open Delhi Chamber on Google Maps"
+                  title="Get Directions to New Delhi Chamber (From Current Location to Office)"
                 >
                   <div className="flex items-center gap-3.5">
                     <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
@@ -660,8 +661,9 @@ export const HomePage = () => {
                       </p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2 py-1 rounded-md flex items-center gap-1 group-hover:bg-amber-100 transition-colors">
-                    Map <ExternalLink className="w-2.5 h-2.5" />
+                  <span className="text-[11px] font-bold text-amber-900 bg-amber-100 px-2.5 py-1 rounded-lg flex items-center gap-1 group-hover:bg-amber-200 transition-colors shadow-2xs">
+                    <Navigation className="w-3 h-3 fill-current text-amber-700" />
+                    <span>Directions</span>
                   </span>
                 </a>
 
@@ -670,7 +672,7 @@ export const HomePage = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-amber-400 hover:shadow-xs transition-all group"
-                  title="Open Fatehgarh Office on Google Maps"
+                  title="Get Directions to Fatehgarh Office (From Current Location to Office)"
                 >
                   <div className="flex items-center gap-3.5">
                     <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
@@ -685,8 +687,9 @@ export const HomePage = () => {
                       </p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2 py-1 rounded-md flex items-center gap-1 group-hover:bg-amber-100 transition-colors">
-                    Map <ExternalLink className="w-2.5 h-2.5" />
+                  <span className="text-[11px] font-bold text-amber-900 bg-amber-100 px-2.5 py-1 rounded-lg flex items-center gap-1 group-hover:bg-amber-200 transition-colors shadow-2xs">
+                    <Navigation className="w-3 h-3 fill-current text-amber-700" />
+                    <span>Directions</span>
                   </span>
                 </a>
               </div>

@@ -11,6 +11,7 @@ import {
   Building,
   Globe,
   ExternalLink,
+  Navigation,
   Clock,
   Loader2,
   AlertCircle,
@@ -166,10 +167,11 @@ export const ConsultationForm = () => {
                     href={advocateData.personal.offices.delhi.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 hover:bg-amber-200 text-amber-900 text-[11px] font-semibold transition-colors"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold shadow-xs transition-all active:scale-95"
+                    title="Get turn-by-turn directions to Delhi Chamber"
                   >
-                    <span>Open Map</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
+                    <Navigation className="w-3 h-3 fill-current" />
+                    <span>Get Directions</span>
                   </a>
                 </div>
                 <p className="font-serif font-bold text-slate-900 text-sm">
@@ -191,10 +193,11 @@ export const ConsultationForm = () => {
                     href={advocateData.personal.offices.up.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 hover:bg-amber-200 text-amber-900 text-[11px] font-semibold transition-colors"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold shadow-xs transition-all active:scale-95"
+                    title="Get turn-by-turn directions to Fatehgarh Office"
                   >
-                    <span>Open Map</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
+                    <Navigation className="w-3 h-3 fill-current" />
+                    <span>Get Directions</span>
                   </a>
                 </div>
                 <p className="font-serif font-bold text-slate-900 text-sm">

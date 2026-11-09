@@ -15,6 +15,7 @@ import {
   Building,
   Landmark,
   ExternalLink,
+  Navigation,
 } from "lucide-react";
 import { advocateData } from "../../data/siteData";
 import { openWhatsApp } from "../../utils/whatsapp";
@@ -160,11 +161,11 @@ export const Footer = () => {
                     href={advocateData.personal.offices.delhi.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] text-amber-400/90 hover:text-amber-300 flex items-center gap-1 font-sans underline underline-offset-2"
-                    title="Open New Delhi Chamber on Google Maps"
+                    className="text-[10px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-sans underline underline-offset-2"
+                    title="Get Directions to New Delhi Chamber (From Current Location to Office)"
                   >
-                    <span>Map</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
+                    <Navigation className="w-2.5 h-2.5" />
+                    <span>Get Directions</span>
                   </a>
                 </div>
                 <p className="text-slate-300 font-medium">
@@ -186,11 +187,11 @@ export const Footer = () => {
                     href={advocateData.personal.offices.up.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] text-amber-400/90 hover:text-amber-300 flex items-center gap-1 font-sans underline underline-offset-2"
-                    title="Open Fatehgarh Office on Google Maps"
+                    className="text-[10px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-sans underline underline-offset-2"
+                    title="Get Directions to Fatehgarh Office (From Current Location to Office)"
                   >
-                    <span>Map</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
+                    <Navigation className="w-2.5 h-2.5" />
+                    <span>Get Directions</span>
                   </a>
                 </div>
                 <p className="text-slate-300 font-medium">
