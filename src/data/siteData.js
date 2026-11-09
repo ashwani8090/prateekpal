@@ -14,7 +14,7 @@ export const advocateData = {
     },
     summary:
       "Prateek Associates is a professional consultancy providing integrated services in legal advocacy, taxation, financial compliance, and property consultancy. We assist individuals, business owners, companies, traders, investors, and institutions across Delhi and Uttar Pradesh in addressing their legal, tax, financial, and real estate requirements through coordinated professional support.",
-    email: "jsprateeks@gmail.com",
+    email: "support@prateekpal.com",
     phone: "9794801100",
     phoneDisplay: "+91 97948 01100",
     whatsappNumber: "919794801100",
@@ -855,7 +855,7 @@ export const advocateData = {
     },
     {
       q: "How can I book a consultation?",
-      a: "You can contact Prateek Associates by phone (+91 9794801100), via WhatsApp, or email (jsprateeks@gmail.com) using the contact details provided on this website. Please briefly describe your matter so that the appropriate service requirements can be discussed.",
+      a: "You can contact Prateek Associates by phone (+91 9794801100), via WhatsApp, or email (support@prateekpal.com) using the contact details provided on this website. Please briefly describe your matter so that the appropriate service requirements can be discussed.",
     },
   ],
 
