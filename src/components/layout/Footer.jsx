@@ -14,6 +14,7 @@ import {
   Globe,
   Building,
   Landmark,
+  ExternalLink,
 } from "lucide-react";
 import { advocateData } from "../../data/siteData";
 import { openWhatsApp } from "../../utils/whatsapp";
@@ -149,10 +150,22 @@ export const Footer = () => {
             
             <div className="space-y-3 text-xs">
               {/* New Delhi Chamber */}
-              <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                <div className="flex items-center gap-2 text-amber-400 font-semibold text-xs mb-1">
-                  <Landmark className="w-3.5 h-3.5" />
-                  <span>New Delhi Chamber</span>
+              <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-400/50 transition-colors">
+                <div className="flex items-center justify-between text-amber-400 font-semibold text-xs mb-1">
+                  <div className="flex items-center gap-2">
+                    <Landmark className="w-3.5 h-3.5" />
+                    <span>New Delhi Chamber</span>
+                  </div>
+                  <a
+                    href={advocateData.personal.offices.delhi.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] text-amber-400/90 hover:text-amber-300 flex items-center gap-1 font-sans underline underline-offset-2"
+                    title="Open New Delhi Chamber on Google Maps"
+                  >
+                    <span>Map</span>
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
                 </div>
                 <p className="text-slate-300 font-medium">
                   {advocateData.personal.offices.delhi.address}
@@ -162,11 +175,23 @@ export const Footer = () => {
                 </p>
               </div>
 
-              {/* Uttar Pradesh Corporate Office */}
-              <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                <div className="flex items-center gap-2 text-amber-400 font-semibold text-xs mb-1">
-                  <Building className="w-3.5 h-3.5" />
-                  <span>Uttar Pradesh Office</span>
+              {/* Uttar Pradesh Corporate Office (Fatehgarh) */}
+              <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-400/50 transition-colors">
+                <div className="flex items-center justify-between text-amber-400 font-semibold text-xs mb-1">
+                  <div className="flex items-center gap-2">
+                    <Building className="w-3.5 h-3.5" />
+                    <span>Fatehgarh Office (UP)</span>
+                  </div>
+                  <a
+                    href={advocateData.personal.offices.up.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] text-amber-400/90 hover:text-amber-300 flex items-center gap-1 font-sans underline underline-offset-2"
+                    title="Open Fatehgarh Office on Google Maps"
+                  >
+                    <span>Map</span>
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
                 </div>
                 <p className="text-slate-300 font-medium">
                   {advocateData.personal.offices.up.address}

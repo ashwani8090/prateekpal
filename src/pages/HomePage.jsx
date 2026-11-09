@@ -22,6 +22,7 @@ import {
   CheckCheck,
   ShieldAlert,
   MapPin,
+  ExternalLink,
   ChevronDown,
   ChevronRight,
   User,
@@ -639,19 +640,55 @@ export const HomePage = () => {
                   </div>
                 </a>
 
-                <div className="flex items-center gap-3.5 p-4 rounded-xl border border-slate-200">
-                  <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0">
-                    <MapPin className="w-4 h-4" />
+                <a
+                  href={advocateData.personal.offices.delhi.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-amber-400 hover:shadow-xs transition-all group"
+                  title="Open Delhi Chamber on Google Maps"
+                >
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif font-bold text-slate-900 text-sm">
+                        New Delhi Chamber
+                      </h4>
+                      <p className="text-[11px] text-slate-500">
+                        Chamber 527, Patiala House Courts
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-serif font-bold text-slate-900 text-sm">
-                      New Delhi, India
-                    </h4>
-                    <p className="text-[11px] text-slate-500">
-                      Chamber 527, Patiala House Courts
-                    </p>
+                  <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2 py-1 rounded-md flex items-center gap-1 group-hover:bg-amber-100 transition-colors">
+                    Map <ExternalLink className="w-2.5 h-2.5" />
+                  </span>
+                </a>
+
+                <a
+                  href={advocateData.personal.offices.up.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-amber-400 hover:shadow-xs transition-all group"
+                  title="Open Fatehgarh Office on Google Maps"
+                >
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <Building className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif font-bold text-slate-900 text-sm">
+                        Fatehgarh Office (UP)
+                      </h4>
+                      <p className="text-[11px] text-slate-500">
+                        Loco Road, Near Maseni Chauraha
+                      </p>
+                    </div>
                   </div>
-                </div>
+                  <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2 py-1 rounded-md flex items-center gap-1 group-hover:bg-amber-100 transition-colors">
+                    Map <ExternalLink className="w-2.5 h-2.5" />
+                  </span>
+                </a>
               </div>
 
               {/* Right Side: Contact Form matching mockup */}

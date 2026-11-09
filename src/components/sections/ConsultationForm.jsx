@@ -10,6 +10,7 @@ import {
   Landmark,
   Building,
   Globe,
+  ExternalLink,
   Clock,
   Loader2,
   AlertCircle,
@@ -155,10 +156,21 @@ export const ConsultationForm = () => {
               </a>
 
               {/* Delhi Chambers */}
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-700">
-                  <Landmark className="w-4 h-4" />
-                  <span>Delhi Chamber</span>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5 hover:border-amber-400 transition-colors">
+                <div className="flex items-center justify-between text-xs font-bold text-amber-700">
+                  <div className="flex items-center gap-2">
+                    <Landmark className="w-4 h-4" />
+                    <span>Delhi Chamber</span>
+                  </div>
+                  <a
+                    href={advocateData.personal.offices.delhi.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 hover:bg-amber-200 text-amber-900 text-[11px] font-semibold transition-colors"
+                  >
+                    <span>Open Map</span>
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
                 </div>
                 <p className="font-serif font-bold text-slate-900 text-sm">
                   {advocateData.personal.offices.delhi.address}
@@ -168,11 +180,22 @@ export const ConsultationForm = () => {
                 </p>
               </div>
 
-              {/* UP Corporate Office */}
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-700">
-                  <Building className="w-4 h-4" />
-                  <span>Uttar Pradesh Corporate Office</span>
+              {/* UP Corporate Office (Fatehgarh) */}
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5 hover:border-amber-400 transition-colors">
+                <div className="flex items-center justify-between text-xs font-bold text-amber-700">
+                  <div className="flex items-center gap-2">
+                    <Building className="w-4 h-4" />
+                    <span>Fatehgarh Office (UP)</span>
+                  </div>
+                  <a
+                    href={advocateData.personal.offices.up.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 hover:bg-amber-200 text-amber-900 text-[11px] font-semibold transition-colors"
+                  >
+                    <span>Open Map</span>
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
                 </div>
                 <p className="font-serif font-bold text-slate-900 text-sm">
                   {advocateData.personal.offices.up.address}
