@@ -1,13 +1,8 @@
 import { Resend } from 'resend';
 
 export default async function handler(req, res) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ success: false, error: 'RESEND_API_KEY environment variable is not configured' });
-  }
-  const resend = new Resend(apiKey);
-  // CORS configuration if called from another domain
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  // CORS configuration
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
@@ -24,8 +19,23 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, error: 'Method Not Allowed' });
   }
 
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ success: false, error: 'RESEND_API_KEY is not configured' });
+  }
+
+  const resend = new Resend(apiKey);
+  const defaultRecipient = process.env.RECIPIENT_EMAIL || 'jsprateeks@gmail.com';
+  const defaultFrom = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+
   try {
+    const body = req.body || {};
     const {
+      to,
+      from,
+      subject,
+      html,
+      text,
       name,
       phone,
       email,
@@ -34,7 +44,28 @@ export default async function handler(req, res) {
       location,
       message,
       source,
-    } = req.body || {};
+    } = body;
+
+    // Mode 1: Direct email payload provided (to, subject, html/text)
+    if (to && (html || text)) {
+      const emailPayload = {
+        from: from || defaultFrom,
+        to,
+        subject: subject || 'New Notification from Prateek Associates',
+        ...(html ? { html } : {}),
+        ...(text ? { text } : {}),
+      };
+
+      const result = await resend.emails.send(emailPayload);
+      if (result.error) {
+        return res.status(400).json({ success: false, error: result.error.message || result.error });
+      }
+      return res.status(200).json({ success: true, result });
+    }
+
+    // Mode 2: Contact / Inquiry form submission
+    const clientName = name || 'Prospective Client';
+    const emailSubject = subject || `New Legal Inquiry: ${clientName} - ${division || 'General Consultation'}`;
 
     const htmlContent = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
@@ -98,37 +129,43 @@ export default async function handler(req, res) {
       </div>
     `;
 
-    const recipientEmail = process.env.RECIPIENT_EMAIL || 'jsprateeks@gmail.com';
-    const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+    const recipient = to || defaultRecipient;
+    const sender = from || defaultFrom;
 
-    let result = await resend.emails.send({
-      from: fromEmail,
-      to: recipientEmail,
-      subject: `New Legal Inquiry: ${name || 'Client'} - ${division || 'General Consultation'}`,
+    const result = await resend.emails.send({
+      from: sender,
+      to: recipient,
+      replyTo: email || undefined,
+      subject: emailSubject,
       html: htmlContent,
     });
 
-    // Handle Resend free testing sandbox restriction fallback
-    if (
-      result.error &&
-      (result.error.statusCode === 403 || result.error.name === 'validation_error') &&
-      result.error.message?.includes('testing emails')
-    ) {
-      console.warn(
-        `[Resend Notice] Direct dispatch to ${recipientEmail} restricted in free sandbox. Forwarding to verified account address.`
-      );
-      result = await resend.emails.send({
-        from: fromEmail,
-        to: 'ashwani9080singh@gmail.com',
-        subject: `[Intended For: ${recipientEmail}] New Legal Inquiry: ${name || 'Client'} - ${division || 'General Consultation'}`,
-        html: `
-          <div style="background:#fffbeb;border:1px solid #fde68a;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:12px;color:#92400e;">
-            <strong>⚠️ Resend Sandbox Delivery:</strong> Intended recipient is <strong>${recipientEmail}</strong>.<br/>
-            While Resend is in free testing mode with <code>onboarding@resend.dev</code>, Resend only delivers to the account owner email. Once a custom domain is verified at <a href="https://resend.com/domains" style="color:#b45309;font-weight:bold;">resend.com/domains</a>, emails will be delivered directly to <strong>${recipientEmail}</strong>.
-          </div>
-          ${htmlContent}
-        `,
-      });
+    if (result.error) {
+      // If free sandbox restricts recipient to account owner, fallback gracefully
+      if (
+        (result.error.statusCode === 403 || result.error.name === 'validation_error') &&
+        result.error.message?.includes('testing emails')
+      ) {
+        console.warn(
+          `[Resend Notice] Direct dispatch to ${recipient} restricted in free sandbox. Forwarding to verified account address.`
+        );
+        const sandboxFallback = await resend.emails.send({
+          from: sender,
+          to: 'ashwani9080singh@gmail.com',
+          replyTo: email || undefined,
+          subject: `[Intended For: ${recipient}] ${emailSubject}`,
+          html: `
+            <div style="background:#fffbeb;border:1px solid #fde68a;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:12px;color:#92400e;">
+              <strong>⚠️ Resend Sandbox Delivery:</strong> Intended recipient is <strong>${recipient}</strong>.<br/>
+              While Resend is in free testing mode with <code>onboarding@resend.dev</code>, Resend only delivers to the account owner email. Once a custom domain is verified at <a href="https://resend.com/domains" style="color:#b45309;font-weight:bold;">resend.com/domains</a>, emails will be delivered directly to <strong>${recipient}</strong>.
+            </div>
+            ${htmlContent}
+          `,
+        });
+        return res.status(200).json({ success: true, result: sandboxFallback });
+      }
+
+      return res.status(400).json({ success: false, error: result.error.message || result.error });
     }
 
     return res.status(200).json({ success: true, result });
