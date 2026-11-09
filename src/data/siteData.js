@@ -43,7 +43,7 @@ export const advocateData = {
         city: "New Delhi, India",
         landmark: "Patiala House Courts Complex",
         type: "Court Chambers & Litigation Suite",
-        mapUrl: "https://maps.app.goo.gl/g1WttbyKQ8e5SNrd9?g_st=awb",
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Chamber+No+527+Patiala+House+Courts+India+Gate+New+Delhi+110001",
       },
       up: {
         title: "Corporate Office (Uttar Pradesh)",
@@ -51,7 +51,7 @@ export const advocateData = {
         city: "Post Farrukhabad, Uttar Pradesh, India",
         landmark: "Near Maseni Chauraha, Fatehgarh",
         type: "Corporate & Consultation Office",
-        mapUrl: "https://maps.app.goo.gl/tqymvusuFSdRnsT5A?g_st=awb",
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Loco+Road+Near+Maseni+Chauraha+Fatehgarh+Farrukhabad+Uttar+Pradesh+209625",
       },
     },
 
