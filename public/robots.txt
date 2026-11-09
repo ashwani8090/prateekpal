@@ -1,0 +1,10 @@
+# robots.txt for https://www.prateekpal.com/
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Host
+Host: https://www.prateekpal.com
+
+# XML Sitemap
+Sitemap: https://www.prateekpal.com/sitemap.xml

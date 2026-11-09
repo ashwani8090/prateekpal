@@ -5,6 +5,7 @@ import { Footer } from "./components/layout/Footer";
 import { BciDisclaimerModal } from "./components/layout/BciDisclaimerModal";
 import { FloatingWhatsApp } from "./components/ui/FloatingWhatsApp";
 import { ScrollToTop } from "./components/common/ScrollToTop";
+import { SeoManager } from "./components/common/SeoManager";
 
 // Dedicated Pages
 import { HomePage } from "./pages/HomePage";
@@ -20,6 +21,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <SeoManager />
       <div className="min-h-screen bg-white text-slate-800 flex flex-col relative selection:bg-amber-400 selection:text-slate-950 font-sans">
         {/* Mandatory Bar Council of India Regulatory Modal */}
         <BciDisclaimerModal />
