@@ -1,7 +1,35 @@
 # robots.txt for https://www.prateekpal.com/
+# Optimized for Web Search & AI Answer Engines (GEO/AEO)
+
 User-agent: *
 Allow: /
 Disallow: /api/
+
+# OpenAI Search & ChatGPT Crawlers
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Perplexity AI Search Crawler
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-Search
+Allow: /
+
+# Anthropic Claude Crawlers
+User-agent: ClaudeBot
+Allow: /
+
+# Google Gemini & AI Overviews
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
 
 # Host
 Host: https://www.prateekpal.com
